@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>GTS Student Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-green-100">
+  <header class="w-full h-30 bg-[#285535] text-white">
+    <div class="overflow-none w-full flex gap-2">
+      <div class="w-38">
+        <img src="/school-logo.png" class="h-30 p-2">
+      </div>
+      <div class="mx-auto w-full text-center pt-10">
+        <h1 class="text-3xl font-semibold">GTS Student Portal</h1>
+      </div>
+      <div class="space-2 ml-auto p-2 flex flex-col text-right w-38">
+        <h3 class="font-semibold text-xl">Quick Links</h3>
+        <a href="https://outlook.office.com" target="_blank">Outlook</a>
+        <a href="https://office.com" target="_blank">Office 365</a>
+        <a href="https://www.classcharts.com/student/login" target="_blank">ClassCharts</a>
+      </div>
+    </div>
+  </header>
+  <div class="w-full pt-6">
+
+    <!-- Tailwind: hide by default -->
+    <div id="cros-only" class="text-center">
+      <h3 class="text-2xl font-semibold">You’re using ChromeOS!</h3>
+      <p class="mt-2">ChromeOS is a bit different from Windows, but don’t worry — you can still do almost everything you
+        need.</p>
+      <ul class="list-disc list-inside mt-2 space-y-1">
+        <li>There’s no traditional desktop — your apps run in browser-like windows.</li>
+        <li>You’ll use the <strong>Launcher</strong> (circle icon in the corner) to search for apps and files.</li>
+        <li>Most tasks are done through the <strong>Chrome browser</strong> or web apps.</li>
+        <li>You can access your files through the <strong>Files app</strong>, similar to File Explorer on Windows.</li>
+      </ul>
+      <p class="mt-2">If you’re ever unsure, just ask — we’re here to help!</p>
+
+    </div>
+
+  </div>
+</body>
+
+</html>
+
+<script>
+  function isChromeOS() {
+    // Newer API (preferred if available)
+    if (navigator.userAgentData && navigator.userAgentData.platform) {
+      return navigator.userAgentData.platform === 'Chrome OS';
+    }
+    // Fallback to legacy UA sniff
+    return /CrOS/.test(navigator.userAgent);
+  }
+
+  if (isChromeOS()) {
+    document.getElementById('cros-only').classList.remove('hidden');
+  }
+</script>
