@@ -11,14 +11,14 @@
 <body class="bg-green-100">
   <header class="w-full h-30 bg-[#285535] text-white">
     <div class="overflow-none w-full flex gap-2">
-      <div class="w-38">
+      <div class="w-48">
         <img src="school-logo.png" class="h-30 p-2">
       </div>
       <div class="mx-auto w-full text-center pt-10">
         <h1 class="text-3xl font-semibold">GTS Student Portal</h1>
       </div>
-      <div class="space-2 ml-auto p-2 flex flex-col text-right w-38">
-        <h3 class="font-semibold text-xl">Quick Links</h3>
+      <div class="space-2 ml-auto p-2 flex flex-col text-right w-48">
+        <h3 class="font-semibold md:text-xl">Quick Links</h3>
         <a href="https://outlook.office.com" target="_blank">Outlook</a>
         <a href="https://office.com" target="_blank">Office 365</a>
         <a href="https://www.classcharts.com/student/login" target="_blank">ClassCharts</a>
@@ -26,9 +26,8 @@
     </div>
   </header>
   <div class="w-full pt-6">
-
-    <!-- Tailwind: hide by default -->
-    <div id="cros-only" class="text-center">
+    <!-- Tailwind: hide by default and only show on ChromeOS -->
+    <div id="cros-only" class="hidden text-center">
       <h3 class="text-2xl font-semibold">You’re using ChromeOS!</h3>
       <p class="mt-2">ChromeOS is a bit different from Windows, but don’t worry, you can still do almost everything you
         need.</p>
@@ -38,15 +37,69 @@
         <li>Most tasks are done through the <strong>Chrome browser</strong> or web apps.</li>
         <li>You can access your files through the <strong>Files app</strong>, similar to File Explorer on Windows.</li>
       </ul>
-
     </div>
-
   </div>
+
+<!-- App Tile Section! Do NOT add tiles here manually! Use the JSON object in the <Script> Tag! -->
+<section class="md:w-3/4 mx-auto">
+  <div id="app-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4"></div>
+</section>
+
+
 </body>
 
 </html>
 
 <script>
+  //JSON object for tiles
+const apps = [
+    {
+      name: "Outlook",
+      logo: "icons/outlook.png",
+      description: "Access your school email and calendar.",
+      link: "https://outlook.office.com"
+    },
+
+    {
+      name: "OneDrive",
+      logo: "icons/onedrive.png",
+      description: "Access your cloud documents.",
+      link: "https://m365.cloud.microsoft/onedrive/?auth=2"
+    },
+
+    {
+      name: "ClassCharts",
+      logo: "icons/classcharts.png",
+      description: "Track attendance, behaviour and homework in one place.",
+      link: "https://www.classcharts.com/student/login"
+    },
+   
+    // Add more apps as needed, remember that each JSON object needs a trailing comma otherwise it will break!
+  ];
+
+//App Tile logic -- Don't create tiles manually!!! Add them here!
+const container = document.getElementById('app-grid');
+
+apps.forEach(app => {
+  const card = document.createElement('a');
+  card.href = app.link;
+  card.target = '_blank';
+  card.className = 'block bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition flex items-start space-x-4';
+
+  card.innerHTML = `
+    <img src="${app.logo}" alt="${app.name} logo" class="w-12 h-12 object-contain">
+    <div>
+      <h4 class="text-lg font-semibold">${app.name}</h4>
+      <p class="text-sm text-gray-600">${app.description}</p>
+    </div>
+  `;
+
+  container.appendChild(card);
+});
+
+
+
+//ChromeOS Detector
   function isChromeOS() {
     // Newer API (preferred if available)
     if (navigator.userAgentData && navigator.userAgentData.platform) {
@@ -59,4 +112,6 @@
   if (isChromeOS()) {
     document.getElementById('cros-only').classList.remove('hidden');
   }
+
+
 </script>
