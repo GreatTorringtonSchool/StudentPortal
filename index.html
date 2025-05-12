@@ -5,11 +5,13 @@
   <meta charset="UTF-8" />
   <title>GTS Student Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link href="output.css" rel="stylesheet">
+
 </head>
 
 <body class="bg-green-100">
-  <header class="w-full h-30 bg-[#285535] text-white">
+  <header class="w-full h-30 bg-[#285535] text-white shadow-lg">
     <div class="overflow-none w-full flex gap-2">
       <div class="w-48">
         <img src="school-logo.png" class="h-30 p-2">
@@ -20,31 +22,32 @@
       <div class="space-2 ml-auto p-2 flex flex-col text-right w-48">
         <h3 class="font-semibold md:text-xl">Quick Links</h3>
         <a href="https://outlook.office.com" target="_blank">Outlook</a>
-        <a href="https://office.com" target="_blank">Office 365</a>
+        <a href="https://greattorringtonschool.sharepoint.com/sites/StudentSharedDocuments"
+          target="_blank">Sharepoint</a>
         <a href="https://www.classcharts.com/student/login" target="_blank">ClassCharts</a>
+
       </div>
     </div>
   </header>
-  <div class="w-full pt-6">
+
+
     <!-- Tailwind: hide by default and only show on ChromeOS -->
-    <div id="cros-only" class="hidden text-center">
+    <div id="cros-only" class="hidden text-center pt-5">
       <h3 class="text-2xl font-semibold">You’re using ChromeOS!</h3>
       <p class="mt-2">ChromeOS is a bit different from Windows, but don’t worry, you can still do almost everything you
         need.</p>
       <ul class="list-disc list-inside mt-2 space-y-1">
         <li>There’s no traditional desktop — your apps run in browser-like windows.</li>
-        <li>You’ll use the <strong>Launcher</strong> (circle icon in the corner) to search for apps and files.</li>
+        <li>You’ll use the <strong>Launcher</strong> (G icon in the bottom-left corner) to search for apps and files.</li>
         <li>Most tasks are done through the <strong>Chrome browser</strong> or web apps.</li>
         <li>You can access your files through the <strong>Files app</strong>, similar to File Explorer on Windows.</li>
       </ul>
     </div>
-  </div>
 
-<!-- App Tile Section! Do NOT add tiles here manually! Use the JSON object in the <Script> Tag! -->
-<section class="md:w-3/4 mx-auto">
-  <h2 class="text-2xl text-center font-semibold">School Apps</h2>
-  <div id="app-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4"></div>
-</section>
+  <div class="md:w-3/4 mx-auto py-5">
+    <h2 class="text-2xl text-center font-semibold">School Apps</h2>
+    <div id="app-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-2"></div>
+  </div>
 
 
 </body>
@@ -52,76 +55,34 @@
 </html>
 
 <script>
-  //JSON object for tiles
-const apps = [
-    {
-      name: "Outlook",
-      logo: "icons/outlook.png",
-      description: "Access your school email and calendar.",
-      link: "https://outlook.office.com"
-    },
+  // Apps configured in apps.json
+  fetch('apps.json')
+    .then(response => response.json())
+    .then(apps => {
+      const container = document.getElementById('app-grid');
 
-    {
-      name: "OneDrive",
-      logo: "icons/onedrive.png",
-      description: "Access your cloud documents.",
-      link: "https://m365.cloud.microsoft/onedrive/?auth=2"
-    },
+      apps.forEach(app => {
+        const card = document.createElement('a');
+        card.href = app.link;
+        card.target = '_blank';
+        card.className = 'block bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition flex items-start space-x-4';
 
-    {
-      name: "ClassCharts",
-      logo: "icons/classcharts.png",
-      description: "Track attendance, behaviour and homework in one place.",
-      link: "https://www.classcharts.com/student/login"
-    },
+        card.innerHTML = `
+        <img src="${app.logo}" alt="${app.name} logo" class="w-12 h-12 object-contain">
+        <div>
+          <h4 class="text-lg font-semibold">${app.name}</h4>
+          <p class="text-sm text-gray-600">${app.description}</p>
+        </div>
+      `;
 
-    {
-      name: "EduCake",
-      logo: "icons/educake.png",
-      description: "Login using the 'Sign in with Microsoft' button. This means you'll be able to sign in using your school email address and normal password.",
-      link: "https://my.educake.co.uk/student-login"
-    },
+        container.appendChild(card);
+      });
+    })
+    .catch(error => {
+      console.error('Error loading app data:', error);
+    });
 
-     {
-      name: "Language Gym",
-      logo: "icons/languagegym.png",
-      description: "School email address and seperate password. If you've forgotten your password please try the 'Forgot your password?' option or visit the ICT Support Office.",
-      link: "https://uk.language-gym.com/login"
-    },
-
-    {
-      name: "Sparx Maths",
-      logo: "icons/sparxmaths.png",
-      description: "Login using the 'Sign in with Microsoft' button. This means you'll be able to sign in using your school email address and normal password.",
-      link: "https://www.sparxmaths.uk/student?s=greattorringtonschool&school=7d127acc-259d-4fd2-8d44-60885cc13c03"
-    }
-   
-    // Add more apps as needed, remember that each JSON object needs a trailing comma otherwise it will break!
-  ];
-
-//App Tile logic -- Don't create tiles manually!!! Add them here!
-const container = document.getElementById('app-grid');
-
-apps.forEach(app => {
-  const card = document.createElement('a');
-  card.href = app.link;
-  card.target = '_blank';
-  card.className = 'block bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition flex items-start space-x-4';
-
-  card.innerHTML = `
-    <img src="${app.logo}" alt="${app.name} logo" class="w-12 h-12 object-contain">
-    <div>
-      <h4 class="text-lg font-semibold">${app.name}</h4>
-      <p class="text-sm text-gray-600">${app.description}</p>
-    </div>
-  `;
-
-  container.appendChild(card);
-});
-
-
-
-//ChromeOS Detector
+  //ChromeOS Detector
   function isChromeOS() {
     // Newer API (preferred if available)
     if (navigator.userAgentData && navigator.userAgentData.platform) {
@@ -134,6 +95,4 @@ apps.forEach(app => {
   if (isChromeOS()) {
     document.getElementById('cros-only').classList.remove('hidden');
   }
-
-
 </script>

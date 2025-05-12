@@ -1,0 +1,79 @@
+[
+    {
+        "name": "Outlook",
+        "logo": "icons/outlook.png",
+        "description": "Access your school email and calendar.",
+        "link": "https://outlook.office.com"
+    },
+    {
+        "name": "OneDrive",
+        "logo": "icons/onedrive.png",
+        "description": "Access your cloud documents.",
+        "link": "https://m365.cloud.microsoft/onedrive/?auth=2"
+    },
+    {
+        "name": "ClassCharts",
+        "logo": "icons/classcharts.png",
+        "description": "Track attendance, behaviour and homework in one place.",
+        "link": "https://www.classcharts.com/student/login"
+    },
+    {
+        "name": "EduCake",
+        "logo": "icons/educake.png",
+        "description": "Login using the 'Sign in with Microsoft' button. This means you'll be able to sign in using your school email address and normal password.",
+        "link": "https://my.educake.co.uk/student-login"
+    },
+    {
+        "name": "Language Gym",
+        "logo": "icons/languagegym.png",
+        "description": "School email address and seperate password. If you've forgotten your password please try the 'Forgot your password?' option or visit the ICT Support Office.",
+        "link": "https://uk.language-gym.com/login"
+    },
+    {
+        "name": "Sparx Maths",
+        "logo": "icons/sparxmaths.png",
+        "description": "Login using the 'Sign in with Microsoft' button. This means you'll be able to sign in using your school email address and normal password.",
+        "link": "https://www.sparxmaths.uk/student?s=greattorringtonschool&school=7d127acc-259d-4fd2-8d44-60885cc13c03"
+    },
+    {
+        "name": "Portico",
+        "logo": "icons/portico.png",
+        "description": "Access your school documents stored on your N: Drive.",
+        "link" : "https://portico.gts.devon.sch.uk/"
+    },
+
+    {
+        "name": "Seneca",
+        "logo": "icons/seneca.png",
+        "description": "",
+        "link": "https://app.senecalearning.com/courses"
+    },
+
+     {
+        "name": "Focus eLearning",
+        "logo": "icons/focus.png",
+        "description": "",
+        "link": "https://www.focuselearning.co.uk/u/39113/rrEaphwBpDqyfBttEizmujzugdqbsawed"
+    },
+
+     {
+        "name": "Microsoft Word",
+        "logo": "icons/word.png",
+        "description": "Create or Open a Word Document.",
+        "link": "https://m365.cloud.microsoft/launch/word?auth=2"
+    },
+
+     {
+        "name": "Microsoft Excel",
+        "logo": "icons/excel.png",
+        "description": "Create or Open an Excel Spreadsheet.",
+        "link": "https://m365.cloud.microsoft/launch/excel?auth=2"
+    },
+
+     {
+        "name": "Microsoft PowerPoint",
+        "logo": "icons/powerpoint.png",
+        "description": "Create or Open a PowerPoint Presentation.",
+        "link": "https://m365.cloud.microsoft/launch/powerpoint?auth=2"
+    }
+]
