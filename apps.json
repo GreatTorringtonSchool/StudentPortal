@@ -1,5 +1,26 @@
 [
     {
+        "name": "Microsoft Word",
+        "logo": "icons/word.png",
+        "description": "Create or Open a Word Document.",
+        "link": "https://m365.cloud.microsoft/launch/word?auth=2"
+    },
+
+     {
+        "name": "Microsoft Excel",
+        "logo": "icons/excel.png",
+        "description": "Create or Open an Excel Spreadsheet.",
+        "link": "https://m365.cloud.microsoft/launch/excel?auth=2"
+    },
+
+     {
+        "name": "Microsoft PowerPoint",
+        "logo": "icons/powerpoint.png",
+        "description": "Create or Open a PowerPoint Presentation.",
+        "link": "https://m365.cloud.microsoft/launch/powerpoint?auth=2"
+    },
+
+    {
         "name": "Outlook",
         "logo": "icons/outlook.png",
         "description": "Access your school email and calendar.",
@@ -54,26 +75,6 @@
         "logo": "icons/focus.png",
         "description": "",
         "link": "https://www.focuselearning.co.uk/u/39113/rrEaphwBpDqyfBttEizmujzugdqbsawed"
-    },
-
-     {
-        "name": "Microsoft Word",
-        "logo": "icons/word.png",
-        "description": "Create or Open a Word Document.",
-        "link": "https://m365.cloud.microsoft/launch/word?auth=2"
-    },
-
-     {
-        "name": "Microsoft Excel",
-        "logo": "icons/excel.png",
-        "description": "Create or Open an Excel Spreadsheet.",
-        "link": "https://m365.cloud.microsoft/launch/excel?auth=2"
-    },
-
-     {
-        "name": "Microsoft PowerPoint",
-        "logo": "icons/powerpoint.png",
-        "description": "Create or Open a PowerPoint Presentation.",
-        "link": "https://m365.cloud.microsoft/launch/powerpoint?auth=2"
     }
+
 ]
