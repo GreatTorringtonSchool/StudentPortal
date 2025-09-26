@@ -44,6 +44,14 @@
 
       </ul>
     </div>
+    <!-- Tailwind: hide by default and only show on MacOS -->
+    <a href="/login/" id="macos-only" class="hidden block bg-white p-4 shadow-md hover:shadow-lg transition flex items-start space-x-4 mx-auto my-5 w-3/4">
+      <img src="/icons/MacOS.svg" alt="MacOS logo" class="w-12 h-12 object-contain">
+      <div>
+        <h4 class="text-lg font-semibold">Quick Login for Mac</h4>
+        <p class="text-sm text-gray-600">Click here to quickly login with your school account in this browser.</p>
+      </div>
+    </a>
 
   <div class="md:w-3/4 mx-auto py-5">
     <h2 class="text-2xl text-center font-semibold">School Apps</h2>
@@ -95,5 +103,19 @@
 
   if (isChromeOS()) {
     document.getElementById('cros-only').classList.remove('hidden');
+  }
+
+    //MacOS Detector
+  function isMacOS() {
+    // Newer API (preferred if available)
+    if (navigator.userAgentData && navigator.userAgentData.platform) {
+      return navigator.userAgentData.platform === 'macOS' || navigator.userAgentData.platform === 'Macintosh';
+    }
+    // Fallback to legacy UA sniff
+    return /Macintosh/.test(navigator.userAgent);
+  }
+
+  if (isMacOS()) {
+    document.getElementById('macos-only').classList.remove('hidden');
   }
 </script>
