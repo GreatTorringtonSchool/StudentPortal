@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>GTS Login</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link href="/login/output.css" rel="stylesheet">
+  <script src="https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-green-700">
+  <div class="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
+    <img src="/school-logo.png" class="w-24 pb-2 mx-auto" />
+    <h2 class="text-2xl font-semibold text-gray-800 text-center">Sign in to your GTS Account</h2>
+
+    <p id="status" class="text-sm text-gray-600 text-center mt-2">Checking login...
+      <br />
+      <svg class="mx-auto pt-2" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-dasharray="16" stroke-dashoffset="16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3c4.97 0 9 4.03 9 9"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s" values="16;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>
+    </p>
+    
+
+    <div id="usernamePrompt" class="mt-6 hidden">
+      <label class="block text-gray-700 text-sm mb-2 text-lg" for="username">Enter your school username:</label>
+      <input type="text" id="username" placeholder="Username" 
+             class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none" />
+      <button onclick="startLogin()" 
+              class="w-full mt-4 bg-green-600 text-white font-bold py-2 rounded-lg hover:bg-green-700 transition">
+        Sign In
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const domain = "gts.devon.sch.uk";
+    const clientId = "0e572678-de9a-4333-ba70-1c77d69e6cbe"; 
+    const tenantId = "8c00fb32-4af4-42e7-bc7c-fa5a75faf67f"; 
+    const redirectUri = window.location.origin;
+
+    const msalInstance = new msal.PublicClientApplication({
+      auth: {
+        clientId: clientId,
+        authority: `https://login.microsoftonline.com/${tenantId}`,
+        redirectUri: redirectUri
+      },
+      cache: {
+        cacheLocation: "localStorage",
+        storeAuthStateInCookie: true
+      }
+    });
+
+    // Silent login attempt
+    msalInstance.ssoSilent({
+      scopes: ["openid", "profile", "email"]
+    }).then(ssoResponse => {
+      handleAccount(ssoResponse.account);
+    }).catch(error => {
+      console.error("Silent authentication failed:", error);
+      showUsernamePrompt();
+    });
+
+    function handleAccount(account) {
+      const email = account?.username || "";
+      const emailDomain = email.split("@")[1]?.toLowerCase();
+
+      if (emailDomain === domain) {
+        const userOutlookUrl = `https://portal.office.com/`;
+      document.getElementById("status").innerText = `✅ Signed in as ${email}. Redirecting...`;
+      setTimeout(() => window.location.href = userOutlookUrl, 1500);
+      } else {
+        document.getElementById("status").innerText = "❌ Invalid account. Logging out...";
+        setTimeout(() => msalInstance.logoutRedirect(), 1500);
+      }
+    }
+
+    function showUsernamePrompt() {
+      document.getElementById("status").innerText = "";
+      document.getElementById("usernamePrompt").classList.remove("hidden");
+    }
+
+    function startLogin() {
+  let username = document.getElementById("username").value.trim();
+
+  // If user accidentally enters full email, extract only the username before @
+  if (username.includes("@")) {
+    username = username.split("@")[0]; 
+  }
+
+  if (!username) {
+    alert("Please enter your username.");
+    return;
+  }
+
+  const loginHint = `${username}@${domain}`;
+  msalInstance.loginRedirect({
+    scopes: ["openid", "profile", "email"],
+    loginHint: loginHint,
+    prompt: "login"
+  });
+}
+
+document.getElementById("username").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") { 
+    startLogin(); // Call the login function when Enter is pressed
+  }
+});
+  </script>
+</body>
+</html>
