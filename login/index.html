@@ -73,6 +73,8 @@
     function showUsernamePrompt() {
       document.getElementById("status").innerText = "";
       document.getElementById("usernamePrompt").classList.remove("hidden");
+      document.getElementById("username").focus(); // Ensure focus when shown
+
     }
 
     function startLogin() {
