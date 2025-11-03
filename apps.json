@@ -33,6 +33,12 @@
         "link": "https://m365.cloud.microsoft/onedrive/?auth=2"
     },
     {
+        "name": "Pupil Shared Documents",
+        "logo": "icons/sharepoint.png",
+        "description": "Access school shared documents.",
+        "link": "https://greattorringtonschool.sharepoint.com/"
+    },
+    {
         "name": "ClassCharts",
         "logo": "icons/classcharts.png",
         "description": "Track attendance, behaviour and homework in one place.",
@@ -62,7 +68,18 @@
         "description": "Access your school documents stored on your N: Drive.",
         "link" : "https://portico.gts.devon.sch.uk/"
     },
-
+     {
+        "name": "This Is School",
+        "logo": "icons/thisisschool.jpg",
+        "description": "Login using your school email address and the seperate password. If you don't have an account you'll need to create one using the 'Student Registration Code'.",
+        "link": "https://my.thisisschool.com/login"
+    },
+    {
+        "name": "Kerboodle",
+        "logo": "icons/kerboodle.png",
+        "description": "Login using the 'Sign in with Microsoft' button. This means you'll be able to sign in using your school email address and normal password.",
+        "link": "https://www.kerboodle.com/users/login"
+    },
     {
         "name": "Seneca",
         "logo": "icons/seneca.png",
@@ -70,7 +87,7 @@
         "link": "https://app.senecalearning.com/courses"
     },
 
-     {
+    {
         "name": "Focus eLearning",
         "logo": "icons/focus.png",
         "description": "",
