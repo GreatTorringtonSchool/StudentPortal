@@ -77,10 +77,19 @@
       const emailDomain = email.split("@")[1]?.toLowerCase();
 
       if (emailDomain === domain) {
-        const requestedApp = getAppFromUrl();
+        // Check URL parameter first, then localStorage
+        let requestedApp = getAppFromUrl();
+        if (!requestedApp) {
+          requestedApp = localStorage.getItem('requestedApp');
+        }
+        
         const userRedirectUrl = requestedApp && appUrls[requestedApp] ? appUrls[requestedApp] : "https://portal.office.com/";
-      document.getElementById("status").innerText = `✅ Signed in as ${email}. Redirecting...`;
-      setTimeout(() => window.location.href = userRedirectUrl, 1500);
+        
+        // Clear localStorage after use
+        localStorage.removeItem('requestedApp');
+        
+        document.getElementById("status").innerText = `✅ Signed in as ${email}. Redirecting...`;
+        setTimeout(() => window.location.href = userRedirectUrl, 1500);
       } else {
         document.getElementById("status").innerText = "❌ Invalid account. Logging out...";
         setTimeout(() => msalInstance.logoutRedirect(), 1500);
@@ -105,6 +114,12 @@
   if (!username) {
     alert("Please enter your username.");
     return;
+  }
+
+  // Store app parameter in localStorage before redirect
+  const requestedApp = getAppFromUrl();
+  if (requestedApp) {
+    localStorage.setItem('requestedApp', requestedApp);
   }
 
   const loginHint = `${username}@${domain}`;
