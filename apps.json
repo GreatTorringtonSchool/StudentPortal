@@ -60,7 +60,13 @@
         "name": "Sparx Maths",
         "logo": "icons/sparxmaths.png",
         "description": "Login using the 'Sign in with Microsoft' button. This means you'll be able to sign in using your school email address and normal password.",
-        "link": "https://www.sparxmaths.uk/student?s=greattorringtonschool&school=7d127acc-259d-4fd2-8d44-60885cc13c03"
+        "link": "https://auth.sparx-learning.com/oauth2/auth?client_id=sparx-learning&hd=7d127acc-259d-4fd2-8d44-60885cc13c03&p=1&redirect_uri=https%3A%2F%2Fapi.sparx-learning.com%2Foauth2%2Fcallback%2Fsparx&response_type=code&scope=openid+profile+email&state=yl_vUPM101UScTMfLDvPZV7fmLqnP5_VoEhE2f0Dm1AuhRGOJKC66FkWcKMkQt1By-_Rd4JceCq0htnG5-EyB0rcISMwD2M894B53mOTIke0XyW-aFaN9gttRBfNZXjWuWMGWGlKgJxOJvJ8dlOZajQXC3maKl2iR3vgkivul5qAICV-JWgK5wVAEnJSIHBmKro8xMUp9m1jDfSr8POreDtjgH-kGNh2Giq970CQjozdeCblHcQzt2UI2NHTRycZvbLNDypXcb9zzRM%3D"
+    },
+    {
+        "name": "Sparx Reader",
+        "logo": "icons/sparxreader.png",
+        "description": "Login using the 'Sign in with Microsoft' button. This means you'll be able to sign in using your school email address and normal password.",
+        "link": "https://auth.sparx-learning.com/oauth2/auth?client_id=sparx-learning&hd=7d127acc-259d-4fd2-8d44-60885cc13c03&p=2&redirect_uri=https%3A%2F%2Fapi.sparx-learning.com%2Foauth2%2Fcallback%2Fsparx&response_type=code&scope=openid+profile+email&state=f2lqiDrXQQqU44aLrgNYI9n_qGT8P-SGRleA3RWZCgjWKlHmooHgMrQYH_V_Nibd0UwLq_VliyUReG-CfmlC3bMIPVDqdSMLSx3VsILmXWyq7dsp5TdYhuuF5WwY1ZbckOcZKDNiCnzTO6sbdDjilFDTB2ztZ1e-1DMExDyFmNYFOTycWS6LjeV0staDSxaVUvEvty9Y9DUXGIXWtJppit6PmkF3DGjVTUDrIldmsFqbMTWnRU-lF0GMwNOm8CdZfosYpwzOLS7xRFtY"
     },
     {
         "name": "Portico",
@@ -73,12 +79,6 @@
         "logo": "icons/thisisschool.jpg",
         "description": "Login using your school email address and the seperate password. If you don't have an account you'll need to create one using the 'Student Registration Code'.",
         "link": "https://my.thisisschool.com/login"
-    },
-    {
-        "name": "Kerboodle",
-        "logo": "icons/kerboodle.png",
-        "description": "Login using the 'Sign in with Microsoft' button. This means you'll be able to sign in using your school email address and normal password.",
-        "link": "https://www.kerboodle.com/users/login"
     },
     {
         "name": "Seneca",

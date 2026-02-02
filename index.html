@@ -45,16 +45,25 @@
       </ul>
     </div>
     <!-- Tailwind: hide by default and only show on MacOS -->
-    <a href="/login/" id="macos-only" class="hidden block bg-white p-4 shadow-md hover:shadow-lg transition flex items-start space-x-4 mx-auto my-5 w-3/4">
+    <a href="/login" class="macos-only hidden block block bg-white p-4 shadow-md hover:shadow-lg transition flex items-start space-x-4">
       <img src="/icons/MacOS.svg" alt="MacOS logo" class="w-12 h-12 object-contain">
       <div>
         <h4 class="text-lg font-semibold">Quick Login for Mac</h4>
-        <p class="text-sm text-gray-600">Click here to quickly login with your school account in this browser.</p>
+        <p class="text-sm text-gray-600">Click here to quickly login with your school account in this browser</p>
       </div>
     </a>
 
+    
+
   <div class="md:w-3/4 mx-auto py-5">
-    <h2 class="text-2xl text-center font-semibold">School Apps</h2>
+    <a href="https://www.youtube.com/@gtsperformingarts/playlists" class="macos-only hidden max-w-115 block bg-white p-4 shadow-md hover:shadow-lg transition flex items-start space-x-4 mx-auto py-5 rounded-xl">
+       <img src="/icons/YouTube.png" alt="MacOS logo" class="w-12 h-12 object-contain">
+      <div>
+        <h4 class="text-lg font-semibold">GTS Performing Arts</h4>
+        <p class="text-sm text-gray-600">Click here to access Performing Arts Playlists on YouTube</p>
+      </div>
+    </a>
+    <h2 class="text-2xl text-center font-semibold mt-4">School Apps</h2>
     <div id="app-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-2"></div>
   </div>
 
@@ -116,6 +125,6 @@
   }
 
   if (isMacOS()) {
-    document.getElementById('macos-only').classList.remove('hidden');
+    document.querySelectorAll('.macos-only').forEach(el => el.classList.remove('hidden'));
   }
 </script>

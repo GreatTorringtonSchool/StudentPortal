@@ -34,6 +34,22 @@
     const tenantId = "8c00fb32-4af4-42e7-bc7c-fa5a75faf67f"; 
     const redirectUri = "https://studentportal.gts.devon.sch.uk/login/";
 
+    // App mapping for URL parameters
+    const appUrls = {
+      "word": "https://m365.cloud.microsoft/launch/word?auth=2",
+      "excel": "https://m365.cloud.microsoft/launch/excel?auth=2",
+      "powerpoint": "https://m365.cloud.microsoft/launch/powerpoint?auth=2",
+      "outlook": "https://outlook.office.com",
+      "onedrive": "https://m365.cloud.microsoft/onedrive/?auth=2",
+      "sharepoint": "https://greattorringtonschool.sharepoint.com/"
+    };
+
+    // Get app parameter from URL
+    function getAppFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('app')?.toLowerCase();
+    }
+
     const msalInstance = new msal.PublicClientApplication({
       auth: {
         clientId: clientId,
@@ -61,9 +77,10 @@
       const emailDomain = email.split("@")[1]?.toLowerCase();
 
       if (emailDomain === domain) {
-        const userOutlookUrl = `https://portal.office.com/`;
+        const requestedApp = getAppFromUrl();
+        const userRedirectUrl = requestedApp && appUrls[requestedApp] ? appUrls[requestedApp] : "https://portal.office.com/";
       document.getElementById("status").innerText = `✅ Signed in as ${email}. Redirecting...`;
-      setTimeout(() => window.location.href = userOutlookUrl, 1500);
+      setTimeout(() => window.location.href = userRedirectUrl, 1500);
       } else {
         document.getElementById("status").innerText = "❌ Invalid account. Logging out...";
         setTimeout(() => msalInstance.logoutRedirect(), 1500);
