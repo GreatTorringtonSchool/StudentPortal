@@ -3,40 +3,40 @@
         "name": "Microsoft Word",
         "logo": "icons/word.png",
         "description": "Create or Open a Word Document.",
-        "link": "https://m365.cloud.microsoft/launch/word?auth=2"
+        "link": "https://studentportal.gts.devon.sch.uk/login/?app=word"
     },
 
      {
         "name": "Microsoft Excel",
         "logo": "icons/excel.png",
         "description": "Create or Open an Excel Spreadsheet.",
-        "link": "https://m365.cloud.microsoft/launch/excel?auth=2"
+        "link": "https://studentportal.gts.devon.sch.uk/login/?app=excel"
     },
 
      {
         "name": "Microsoft PowerPoint",
         "logo": "icons/powerpoint.png",
         "description": "Create or Open a PowerPoint Presentation.",
-        "link": "https://m365.cloud.microsoft/launch/powerpoint?auth=2"
+        "link": "https://studentportal.gts.devon.sch.uk/login/?app=powerpoint"
     },
 
     {
         "name": "Outlook",
         "logo": "icons/outlook.png",
         "description": "Access your school email and calendar.",
-        "link": "https://outlook.office.com"
+        "link": "https://studentportal.gts.devon.sch.uk/login/?app=outlook"
     },
     {
         "name": "OneDrive",
         "logo": "icons/onedrive.png",
         "description": "Access your cloud documents.",
-        "link": "https://m365.cloud.microsoft/onedrive/?auth=2"
+        "link": "https://studentportal.gts.devon.sch.uk/login/?app=onedrive"
     },
     {
         "name": "Pupil Shared Documents",
         "logo": "icons/sharepoint.png",
         "description": "Access school shared documents.",
-        "link": "https://greattorringtonschool.sharepoint.com/"
+        "link": "https://studentportal.gts.devon.sch.uk/login/?app=sharepoint"
     },
     {
         "name": "ClassCharts",
