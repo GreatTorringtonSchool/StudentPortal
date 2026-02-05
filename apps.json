@@ -77,7 +77,7 @@
      {
         "name": "This Is School",
         "logo": "icons/thisisschool.jpg",
-        "description": "Login using your school email address and the seperate password. If you don't have an account you'll need to create one using the 'Student Registration Code'.",
+        "description": "Login using your school email address and the separate password. If you don't have an account you'll need to create one using the 'Student Registration Code'.",
         "link": "https://my.thisisschool.com/login"
     },
     {
