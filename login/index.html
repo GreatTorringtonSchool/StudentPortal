@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>GTS Login</title>
+  <title>Sign in to your account</title>
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link href="/login/output.css" rel="stylesheet">
   <script src="https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js"></script>
+  <style>
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+        /* transform: translateX(0); */
+      }
+      to {
+        opacity: 0;
+        /* transform: translateX(-100%); */
+      }
+    }
+    .animate-fade-out {
+      animation: fadeOut 0.5s ease-in-out forwards;
+    }
+  </style>
 </head>
-<body class="flex items-center justify-center min-h-screen bg-green-700">
-  <div class="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
+<body class="flex items-center justify-center min-h-screen bg-[#1F8842]">
+  <div id="login-modal" class="w-full max-w-md bg-white shadow-lg rounded-none p-8">
     <img src="/school-logo.png" class="w-24 pb-2 mx-auto" />
     <h2 class="text-2xl font-semibold text-gray-800 text-center">Sign in to your GTS Account</h2>
 
@@ -19,13 +34,17 @@
 
     <div id="usernamePrompt" class="mt-6 hidden">
       <label class="block text-gray-700 text-sm mb-2 text-lg" for="username">Enter your school username:</label>
-      <input type="text" id="username" placeholder="Username" 
-             class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none" />
+      <input type="text" id="username" placeholder="Username (e.g. smithj)" 
+             class="w-full p-2 border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none" />
       <button onclick="startLogin()" 
-              class="w-full mt-4 bg-green-600 text-white font-bold py-2 rounded-lg hover:bg-green-700 transition">
+              class="w-full mt-4 bg-blue-600 text-white font-bold py-2 hover:bg-blue-700 transition">
         Sign In
       </button>
     </div>
+  </div>
+
+  <div class="fixed bottom-0 left-0 right-0 h-7 bg-[#0C361A] flex items-center px-4 justify-end">
+    <a href="/" class="text-white text-sm hover:underline text-right">Back to Pupil Portal</a>
   </div>
 
   <script>
@@ -89,10 +108,10 @@
         localStorage.removeItem('requestedApp');
         
         document.getElementById("status").innerText = `✅ Signed in as ${email}. Redirecting...`;
-        setTimeout(() => window.location.href = userRedirectUrl, 1500);
+        setTimeout(() => window.location.href = userRedirectUrl, 500);
       } else {
         document.getElementById("status").innerText = "❌ Invalid account. Logging out...";
-        setTimeout(() => msalInstance.logoutRedirect(), 1500);
+        setTimeout(() => msalInstance.logoutRedirect(), 500);
       }
     }
 
@@ -116,6 +135,10 @@
     return;
   }
 
+  // Add fade out animation
+  const modal = document.getElementById("login-modal");
+  modal.classList.add("animate-fade-out");
+
   // Store app parameter in localStorage before redirect
   const requestedApp = getAppFromUrl();
   if (requestedApp) {
@@ -123,16 +146,28 @@
   }
 
   const loginHint = `${username}@${domain}`;
-  msalInstance.loginRedirect({
-    scopes: ["openid", "profile", "email"],
-    loginHint: loginHint,
-    prompt: "login"
-  });
+  
+  // Wait for animation to complete before redirecting
+  setTimeout(() => {
+    msalInstance.loginRedirect({
+      scopes: ["openid", "profile", "email"],
+      loginHint: loginHint,
+      prompt: "login"
+    });
+  }, 500);
 }
 
 document.getElementById("username").addEventListener("keypress", function(event) {
   if (event.key === "Enter") { 
     startLogin(); // Call the login function when Enter is pressed
+  }
+});
+
+// Reset animation when page is loaded/reloaded
+window.addEventListener("pageshow", function(event) {
+  const modal = document.getElementById("login-modal");
+  if (modal && modal.classList.contains("animate-fade-out")) {
+    modal.classList.remove("animate-fade-out");
   }
 });
   </script>

@@ -44,26 +44,39 @@
 
       </ul>
     </div>
-    <!-- Tailwind: hide by default and only show on MacOS -->
-    <a href="/login" class="macos-only hidden block block bg-white p-4 shadow-md hover:shadow-lg transition flex items-start space-x-4">
-      <img src="/icons/MacOS.svg" alt="MacOS logo" class="w-12 h-12 object-contain">
-      <div>
-        <h4 class="text-lg font-semibold">Quick Login for Mac</h4>
-        <p class="text-sm text-gray-600">Click here to quickly login with your school account in this browser</p>
+    <!-- Search Box with Bing Integration -->
+    <div class="macos-only hidden md:w-3/4 mx-auto py-4 px-2">
+      <div class="relative">
+        <div class="flex gap-2 bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden">
+          <input 
+            type="text" 
+            id="search-input" 
+            placeholder="Search with Bing..." 
+            class="flex-1 px-4 py-3 focus:outline-none"
+            autocomplete="off"
+            autofocus
+          />
+          <button 
+            id="search-btn" 
+            class="px-6 py-3 bg-[#285535] text-white hover:bg-[#1f3d27] transition font-semibold cursor-pointer"
+          >
+            Search
+          </button>
+        </div>
+        <div id="suggestions" class="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-lg z-10 hidden max-h-64 overflow-y-auto"></div>
       </div>
-    </a>
+    </div>
 
     
 
-  <div class="md:w-3/4 mx-auto py-5">
-    <a href="https://www.youtube.com/@gtsperformingarts/playlists" class="macos-only hidden max-w-115 block bg-white p-4 shadow-md hover:shadow-lg transition flex items-start space-x-4 mx-auto py-5 rounded-xl">
-       <img src="/icons/YouTube.png" alt="MacOS logo" class="w-12 h-12 object-contain">
+  <div class="md:w-3/4 mx-auto mt-4">
+    <a href="https://www.youtube.com/@gtsperformingarts/playlists" class="macos-only hidden mb-4 gap-4 w-1/2 block bg-white p-4 shadow-md hover:shadow-lg transition flex items-start mx-auto rounded-xl">
+       <img src="/icons/YouTube.png" alt="YouTube logo" class="w-12 h-12 object-contain">
       <div>
         <h4 class="text-lg font-semibold">GTS Performing Arts</h4>
         <p class="text-sm text-gray-600">Click here to access Performing Arts Playlists on YouTube</p>
       </div>
     </a>
-    <h2 class="text-2xl text-center font-semibold mt-4">School Apps</h2>
     <div id="app-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-2"></div>
   </div>
 
@@ -128,4 +141,26 @@
     document.querySelectorAll('.macos-only').forEach(el => el.classList.remove('hidden'));
   }
 
-</script>
+  // Search Box with Bing and Suggestions
+  const searchInput = document.getElementById('search-input');
+  const searchBtn = document.getElementById('search-btn');
+  const suggestionsBox = document.getElementById('suggestions');
+
+  function searchBing(query) {
+    if (query.trim()) {
+      window.open(`https://www.bing.com/search?q=${encodeURIComponent(query)}`, '_blank');
+    }
+  }
+
+  searchBtn.addEventListener('click', () => {
+    searchBing(searchInput.value);
+  });
+
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      searchBing(searchInput.value);
+    }
+  });
+
+  // Suggestions disabled for now - coming back to this later
+  // TODO: Implement with backend proxy to avoid CORS issues</script>
