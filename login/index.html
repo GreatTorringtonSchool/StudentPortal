@@ -3,8 +3,9 @@
 <head>
   <title>Sign in to your account</title>
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://alcdn.msauth.net" crossorigin>
   <link href="/login/output.css" rel="stylesheet">
-  <script src="https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js"></script>
+  <script src="https://alcdn.msauth.net/browser/2.38.2/js/msal-browser.min.js" defer></script>
   <style>
     @keyframes fadeOut {
       from {
@@ -23,7 +24,7 @@
 </head>
 <body class="flex items-center justify-center min-h-screen bg-[#1F8842]">
   <div id="login-modal" class="w-full max-w-md bg-white shadow-lg rounded-none p-8">
-    <img src="/school-logo.png" class="w-24 pb-2 mx-auto" />
+    <img src="/school-logo.png" alt="School logo" width="96" height="96" class="w-24 pb-2 mx-auto" decoding="async" loading="eager" />
     <h2 class="text-2xl font-semibold text-gray-800 text-center">Sign in to your GTS Account</h2>
 
     <p id="status" class="text-sm text-gray-600 text-center mt-2">Checking login...
@@ -48,130 +49,139 @@
   </div>
 
   <script>
-    const domain = "gts.devon.sch.uk";
-    const clientId = "0e572678-de9a-4333-ba70-1c77d69e6cbe"; 
-    const tenantId = "8c00fb32-4af4-42e7-bc7c-fa5a75faf67f"; 
-    const redirectUri = "https://studentportal.gts.devon.sch.uk/login/";
+    document.addEventListener("DOMContentLoaded", () => {
+      const domain = "gts.devon.sch.uk";
+      const clientId = "0e572678-de9a-4333-ba70-1c77d69e6cbe"; 
+      const tenantId = "8c00fb32-4af4-42e7-bc7c-fa5a75faf67f"; 
+      const redirectUri = "https://studentportal.gts.devon.sch.uk/login/";
 
-    // App mapping for URL parameters
-    const appUrls = {
-      "word": "https://m365.cloud.microsoft/launch/word?auth=2",
-      "excel": "https://m365.cloud.microsoft/launch/excel?auth=2",
-      "powerpoint": "https://m365.cloud.microsoft/launch/powerpoint?auth=2",
-      "outlook": "https://outlook.office.com",
-      "onedrive": "https://greattorringtonschool-my.sharepoint.com/",
-      "sharepoint": "https://greattorringtonschool.sharepoint.com/",
-      "drama": "https://greattorringtonschool.sharepoint.com/:f:/r/sites/Students_Performing_Arts2/Shared%20Documents/Drama/Drama%20Submissions?csf=1&web=1&e=1d3ZS9",
-      "music": "https://greattorringtonschool.sharepoint.com/:f:/r/sites/Students_Performing_Arts2/Shared%20Documents/Music/Music%20Submisions?csf=1&web=1&e=9tpi7n"
-    };
+      // App mapping for URL parameters
+      const appUrls = {
+        "word": "https://m365.cloud.microsoft/launch/word?auth=2",
+        "excel": "https://m365.cloud.microsoft/launch/excel?auth=2",
+        "powerpoint": "https://m365.cloud.microsoft/launch/powerpoint?auth=2",
+        "outlook": "https://outlook.office.com",
+        "onedrive": "https://greattorringtonschool-my.sharepoint.com/",
+        "teams": "https://teams.microsoft.com",
+        "sharepoint": "https://greattorringtonschool.sharepoint.com/",
+        "drama": "https://greattorringtonschool.sharepoint.com/:f:/r/sites/Students_Performing_Arts2/Shared%20Documents/Drama/Drama%20Submissions?csf=1&web=1&e=1d3ZS9",
+        "music": "https://greattorringtonschool.sharepoint.com/:f:/r/sites/Students_Performing_Arts2/Shared%20Documents/Music/Music%20Submisions?csf=1&web=1&e=9tpi7n"
+      };
 
-    // Get app parameter from URL
-    function getAppFromUrl() {
-      const params = new URLSearchParams(window.location.search);
-      return params.get('app')?.toLowerCase();
-    }
-
-    const msalInstance = new msal.PublicClientApplication({
-      auth: {
-        clientId: clientId,
-        authority: `https://login.microsoftonline.com/${tenantId}`,
-        redirectUri: redirectUri
-      },
-      cache: {
-        cacheLocation: "localStorage",
-        storeAuthStateInCookie: true
+      // Get app parameter from URL
+      function getAppFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('app')?.toLowerCase();
       }
-    });
 
-    // Silent login attempt
-    msalInstance.ssoSilent({
-      scopes: ["openid", "profile", "email"]
-    }).then(ssoResponse => {
-      handleAccount(ssoResponse.account);
-    }).catch(error => {
-      console.error("Silent authentication failed:", error);
-      showUsernamePrompt();
-    });
+      if (!window.msal) {
+        console.error("MSAL failed to load.");
+        return;
+      }
 
-    function handleAccount(account) {
-      const email = account?.username || "";
-      const emailDomain = email.split("@")[1]?.toLowerCase();
-
-      if (emailDomain === domain) {
-        // Check URL parameter first, then localStorage
-        let requestedApp = getAppFromUrl();
-        if (!requestedApp) {
-          requestedApp = localStorage.getItem('requestedApp');
+      const msalInstance = new msal.PublicClientApplication({
+        auth: {
+          clientId: clientId,
+          authority: `https://login.microsoftonline.com/${tenantId}`,
+          redirectUri: redirectUri
+        },
+        cache: {
+          cacheLocation: "localStorage",
+          storeAuthStateInCookie: true
         }
-        
-        const userRedirectUrl = requestedApp && appUrls[requestedApp] ? appUrls[requestedApp] : "https://portal.office.com/";
-        
-        // Clear localStorage after use
-        localStorage.removeItem('requestedApp');
-        
-        document.getElementById("status").innerText = `✅ Signed in as ${email}. Redirecting...`;
-        setTimeout(() => window.location.href = userRedirectUrl, 500);
-      } else {
-        document.getElementById("status").innerText = "❌ Invalid account. Logging out...";
-        setTimeout(() => msalInstance.logoutRedirect(), 500);
+      });
+
+      // Silent login attempt
+      msalInstance.ssoSilent({
+        scopes: ["openid", "profile", "email"]
+      }).then(ssoResponse => {
+        handleAccount(ssoResponse.account);
+      }).catch(error => {
+        console.error("Silent authentication failed:", error);
+        showUsernamePrompt();
+      });
+
+      function handleAccount(account) {
+        const email = account?.username || "";
+        const emailDomain = email.split("@")[1]?.toLowerCase();
+
+        if (emailDomain === domain) {
+          // Check URL parameter first, then localStorage
+          let requestedApp = getAppFromUrl();
+          if (!requestedApp) {
+            requestedApp = localStorage.getItem('requestedApp');
+          }
+          
+          const userRedirectUrl = requestedApp && appUrls[requestedApp] ? appUrls[requestedApp] : "https://portal.office.com/";
+          
+          // Clear localStorage after use
+          localStorage.removeItem('requestedApp');
+          
+          document.getElementById("status").innerText = `✅ Signed in as ${email}. Redirecting...`;
+          setTimeout(() => window.location.href = userRedirectUrl, 500);
+        } else {
+          document.getElementById("status").innerText = "❌ Invalid account. Logging out...";
+          setTimeout(() => msalInstance.logoutRedirect(), 500);
+        }
       }
-    }
 
-    function showUsernamePrompt() {
-      document.getElementById("status").innerText = "";
-      document.getElementById("usernamePrompt").classList.remove("hidden");
-      document.getElementById("username").focus(); // Ensure focus when shown
+      function showUsernamePrompt() {
+        document.getElementById("status").innerText = "";
+        document.getElementById("usernamePrompt").classList.remove("hidden");
+        document.getElementById("username").focus();
+      }
 
-    }
+      function startLogin() {
+        let username = document.getElementById("username").value.trim();
 
-    function startLogin() {
-  let username = document.getElementById("username").value.trim();
+        // If user accidentally enters full email, extract only the username before @
+        if (username.includes("@")) {
+          username = username.split("@")[0]; 
+        }
 
-  // If user accidentally enters full email, extract only the username before @
-  if (username.includes("@")) {
-    username = username.split("@")[0]; 
-  }
+        if (!username) {
+          alert("Please enter your username.");
+          return;
+        }
 
-  if (!username) {
-    alert("Please enter your username.");
-    return;
-  }
+        // Add fade out animation
+        const modal = document.getElementById("login-modal");
+        modal.classList.add("animate-fade-out");
 
-  // Add fade out animation
-  const modal = document.getElementById("login-modal");
-  modal.classList.add("animate-fade-out");
+        // Store app parameter in localStorage before redirect
+        const requestedApp = getAppFromUrl();
+        if (requestedApp) {
+          localStorage.setItem('requestedApp', requestedApp);
+        }
 
-  // Store app parameter in localStorage before redirect
-  const requestedApp = getAppFromUrl();
-  if (requestedApp) {
-    localStorage.setItem('requestedApp', requestedApp);
-  }
+        const loginHint = `${username}@${domain}`;
+        
+        // Wait for animation to complete before redirecting
+        setTimeout(() => {
+          msalInstance.loginRedirect({
+            scopes: ["openid", "profile", "email"],
+            loginHint: loginHint,
+            prompt: "login"
+          });
+        }, 500);
+      }
 
-  const loginHint = `${username}@${domain}`;
-  
-  // Wait for animation to complete before redirecting
-  setTimeout(() => {
-    msalInstance.loginRedirect({
-      scopes: ["openid", "profile", "email"],
-      loginHint: loginHint,
-      prompt: "login"
+      document.getElementById("username").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") { 
+          startLogin();
+        }
+      });
+
+      // Reset animation when page is loaded/reloaded
+      window.addEventListener("pageshow", function(event) {
+        const modal = document.getElementById("login-modal");
+        if (modal && modal.classList.contains("animate-fade-out")) {
+          modal.classList.remove("animate-fade-out");
+        }
+      });
+
+      window.startLogin = startLogin;
     });
-  }, 500);
-}
-
-document.getElementById("username").addEventListener("keypress", function(event) {
-  if (event.key === "Enter") { 
-    startLogin(); // Call the login function when Enter is pressed
-  }
-});
-
-// Reset animation when page is loaded/reloaded
-window.addEventListener("pageshow", function(event) {
-  const modal = document.getElementById("login-modal");
-  if (modal && modal.classList.contains("animate-fade-out")) {
-    modal.classList.remove("animate-fade-out");
-  }
-});
   </script>
 </body>
 </html>

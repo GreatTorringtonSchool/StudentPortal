@@ -110,6 +110,10 @@
 
         container.appendChild(card);
       });
+        // After adding all cards, ensure last row with 1-2 items is centered
+        centerLastRow(container);
+        // Re-center on resize
+        window.addEventListener('resize', () => centerLastRow(container));
     })
     .catch(error => {
       console.error('Error loading app data:', error);
@@ -166,3 +170,71 @@
 
   // Suggestions disabled for now - coming back to this later
   // TODO: Implement with backend proxy to avoid CORS issues</script>
+
+<script>
+  // Center last grid row when it has only 1 or 2 items
+  function centerLastRow(container) {
+    if (!container) container = document.getElementById('app-grid');
+
+    // Remove any previous wrapper we created
+    Array.from(container.querySelectorAll('[data-last-row-wrapper]')).forEach(w => {
+      while (w.firstChild) {
+        const child = w.firstChild;
+        child.style.width = '';
+        child.style.maxWidth = '';
+        child.style.flex = '';
+        child.style.boxSizing = '';
+        container.insertBefore(child, w);
+      }
+      w.remove();
+    });
+
+    const items = Array.from(container.children).filter(n => n.nodeType === 1);
+    if (!items.length) return;
+
+    // Group items by row (offsetTop)
+    const rowsMap = new Map();
+    items.forEach(item => {
+      const top = item.offsetTop;
+      if (!rowsMap.has(top)) rowsMap.set(top, []);
+      rowsMap.get(top).push(item);
+    });
+
+    const rows = Array.from(rowsMap.values());
+    const lastRow = rows[rows.length - 1] || [];
+    // Determine number of grid columns from computed style
+    const cs = getComputedStyle(container);
+    const template = cs.gridTemplateColumns || '';
+    const columns = template ? template.split(' ').length : 1;
+
+    // Only modify layout if last row has fewer items than the number of columns
+    if (lastRow.length > 0 && lastRow.length < columns) {
+      // compute numeric gap (column-gap)
+      let gap = 0;
+      const gapVal = cs.columnGap || cs.gap || cs.gridGap || '';
+      if (gapVal) {
+        const px = gapVal.split(' ')[0];
+        gap = parseFloat(px) || 0;
+      }
+
+      const totalGapWidth = gap * (columns - 1);
+      const columnWidth = (container.clientWidth - totalGapWidth) / columns;
+
+      const wrapper = document.createElement('div');
+      wrapper.setAttribute('data-last-row-wrapper', '1');
+      wrapper.style.gridColumn = '1 / -1';
+      wrapper.style.display = 'flex';
+      wrapper.style.justifyContent = 'center';
+      wrapper.style.gap = (gap ? gap + 'px' : '1rem');
+
+      lastRow.forEach(el => {
+        el.style.boxSizing = 'border-box';
+        el.style.flex = `0 0 ${Math.floor(columnWidth)}px`;
+        el.style.maxWidth = Math.floor(columnWidth) + 'px';
+        wrapper.appendChild(el);
+      });
+
+      container.appendChild(wrapper);
+    }
+  }
+</script>

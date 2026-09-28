@@ -33,6 +33,12 @@
         "link": "https://studentportal.gts.devon.sch.uk/login/?app=onedrive"
     },
     {
+        "name": "Microsoft Teams",
+        "logo": "icons/teams.webp",
+        "description": "Access your school Teams.",
+        "link": "https://studentportal.gts.devon.sch.uk/login/?app=teams"
+    },
+    {
         "name": "Pupil Shared Documents",
         "logo": "icons/sharepoint.png",
         "description": "Access school shared documents.",
