@@ -94,7 +94,21 @@
     .then(apps => {
       const container = document.getElementById('app-grid');
 
-      apps.forEach(app => {
+      function getPlatform() {
+        if (typeof isChromeOS === 'function' && isChromeOS()) return 'chromeos';
+        if (typeof isMacOS === 'function' && isMacOS()) return 'macos';
+        const ua = navigator.userAgent || '';
+        if (/Android/.test(ua)) return 'android';
+        if (/iPhone|iPad|iPod/.test(ua)) return 'ios';
+        if (/Win/.test(ua)) return 'windows';
+        if (/Linux/.test(ua)) return 'linux';
+        return 'unknown';
+      }
+
+      const platform = getPlatform();
+      const visibleApps = apps.filter(app => !(app.hideOn && Array.isArray(app.hideOn) && app.hideOn.includes(platform)));
+
+      visibleApps.forEach(app => {
         const card = document.createElement('a');
         card.href = app.link;
         card.target = '_blank';
@@ -110,10 +124,11 @@
 
         container.appendChild(card);
       });
-        // After adding all cards, ensure last row with 1-2 items is centered
-        centerLastRow(container);
-        // Re-center on resize
-        window.addEventListener('resize', () => centerLastRow(container));
+
+      // After adding all cards, ensure last row with 1-2 items is centered
+      centerLastRow(container);
+      // Re-center on resize
+      window.addEventListener('resize', () => centerLastRow(container));
     })
     .catch(error => {
       console.error('Error loading app data:', error);

@@ -36,7 +36,8 @@
         "name": "Microsoft Teams",
         "logo": "icons/teams.webp",
         "description": "Access your school Teams.",
-        "link": "https://studentportal.gts.devon.sch.uk/login/?app=teams"
+        "link": "https://studentportal.gts.devon.sch.uk/login/?app=teams",
+        "hideOn": ["chromeos"]
     },
     {
         "name": "Pupil Shared Documents",
