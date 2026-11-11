@@ -117,10 +117,10 @@
           // Clear localStorage after use
           localStorage.removeItem('requestedApp');
           
-          document.getElementById("status").innerText = `✅ Signed in as ${email}. Redirecting...`;
+          document.getElementById("status").innerText = `Signed in as ${email}. Redirecting...`;
           setTimeout(() => window.location.href = userRedirectUrl, 500);
         } else {
-          document.getElementById("status").innerText = "❌ Invalid account. Logging out...";
+          document.getElementById("status").innerText = `Invalid account. Logging out...`;
           setTimeout(() => msalInstance.logoutRedirect(), 500);
         }
       }

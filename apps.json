@@ -5,21 +5,18 @@
         "description": "Create or Open a Word Document.",
         "link": "https://studentportal.gts.devon.sch.uk/login/?app=word"
     },
-
-     {
+    {
         "name": "Microsoft Excel",
         "logo": "icons/excel.png",
         "description": "Create or Open an Excel Spreadsheet.",
         "link": "https://studentportal.gts.devon.sch.uk/login/?app=excel"
     },
-
-     {
+    {
         "name": "Microsoft PowerPoint",
         "logo": "icons/powerpoint.png",
         "description": "Create or Open a PowerPoint Presentation.",
         "link": "https://studentportal.gts.devon.sch.uk/login/?app=powerpoint"
     },
-
     {
         "name": "Outlook",
         "logo": "icons/outlook.png",
@@ -37,7 +34,9 @@
         "logo": "icons/teams.webp",
         "description": "Access your school Teams.",
         "link": "https://studentportal.gts.devon.sch.uk/login/?app=teams",
-        "hideOn": ["chromeos"]
+        "hideOn": [
+            "chromeos"
+        ]
     },
     {
         "name": "Pupil Shared Documents",
@@ -79,9 +78,9 @@
         "name": "Portico",
         "logo": "icons/portico.png",
         "description": "Access your school documents stored on your N: Drive.",
-        "link" : "https://portico.gts.devon.sch.uk/"
+        "link": "https://portico.gts.devon.sch.uk/"
     },
-     {
+    {
         "name": "This Is School",
         "logo": "icons/thisisschool.jpg",
         "description": "Login using your school email address and the separate password. If you don't have an account you'll need to create one using the 'Student Registration Code'.",
@@ -93,12 +92,22 @@
         "description": "",
         "link": "https://app.senecalearning.com/courses"
     },
-
     {
         "name": "Focus eLearning",
         "logo": "icons/focus.png",
         "description": "",
         "link": "https://www.focuselearning.co.uk/u/39113/rrEaphwBpDqyfBttEizmujzugdqbsawed"
+    },
+    {
+        "name": "Prep & Plate",
+        "logo": "icons/prep-plate.webp",
+        "description": "Hospitality & Catering L1/2 revision and resources.",
+        "link": "https://hospitality-catering.netlify.app"
+    },
+    {
+        "name": "PaperCut Web print",
+        "logo": "icons/papercut.png",
+        "description": "Print documents from your device.",
+        "link": "http://vm-w-print.gts.internal:9191"
     }
-
 ]
